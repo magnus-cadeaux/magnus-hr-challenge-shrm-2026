@@ -105,7 +105,7 @@ export function RegistrationView() {
                 email: wizard.draft.email,
                 phone: wizard.draft.phone,
               });
-              router.push(ROUTES.arena);
+              router.push(ROUTES.challenge);
             }}
           />
         ) : null}
