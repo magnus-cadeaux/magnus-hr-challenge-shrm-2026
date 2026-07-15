@@ -1,0 +1,60 @@
+/* Magnus gradient system */
+
+.text-gradient-blue {
+  background: var(--gradient-blue);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-blue {
+  background-image: var(--gradient-blue);
+}
+
+.bg-gradient-blue-soft {
+  background-image: var(--gradient-blue-soft);
+}
+
+.bg-gradient-blue-horizontal {
+  background-image: var(--gradient-blue-horizontal);
+}
+
+.bg-gradient-gold {
+  background-image: var(--gradient-gold);
+}
+
+.bg-gradient-hero {
+  background-image: var(--gradient-hero);
+}
+
+.bg-gradient-surface {
+  background-image: var(--gradient-surface);
+}
+
+.bg-gradient-radial-glow {
+  background-image: var(--gradient-radial-glow);
+}
+
+.bg-gradient-radial-center {
+  background-image: var(--gradient-radial-center);
+}
+
+.bg-shimmer {
+  background-image: var(--gradient-shimmer);
+  background-size: 200% 100%;
+}
+
+.orb-blue {
+  background-image: var(--gradient-orb-blue);
+}
+
+.orb-cyan {
+  background-image: var(--gradient-orb-cyan);
+}

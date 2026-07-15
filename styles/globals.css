@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./tokens.css";
+@import "./glass.css";
+@import "./gradients.css";
+@import "./shadows.css";
+@import "./animations.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-border-subtle: var(--border-subtle);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-achievement: var(--achievement);
+  --color-achievement-foreground: var(--achievement-foreground);
+
+  --color-navy-950: var(--magnus-navy-950);
+  --color-navy-900: var(--magnus-navy-900);
+  --color-navy-850: var(--magnus-navy-850);
+  --color-navy-800: var(--magnus-navy-800);
+  --color-navy-700: var(--magnus-navy-700);
+  --color-navy-600: var(--magnus-navy-600);
+  --color-blue-600: var(--magnus-blue-600);
+  --color-blue-500: var(--magnus-blue-500);
+  --color-blue-400: var(--magnus-blue-400);
+  --color-blue-300: var(--magnus-blue-300);
+  --color-blue-200: var(--magnus-blue-200);
+  --color-cyan-400: var(--magnus-cyan-400);
+  --color-cyan-300: var(--magnus-cyan-300);
+  --color-gold-600: var(--magnus-gold-600);
+  --color-gold-500: var(--magnus-gold-500);
+  --color-gold-400: var(--magnus-gold-400);
+  --color-gold-300: var(--magnus-gold-300);
+  --color-silver-50: var(--magnus-silver-50);
+  --color-silver-100: var(--magnus-silver-100);
+  --color-silver-200: var(--magnus-silver-200);
+  --color-silver-300: var(--magnus-silver-300);
+  --color-silver-400: var(--magnus-silver-400);
+  --color-silver-500: var(--magnus-silver-500);
+  --color-silver-600: var(--magnus-silver-600);
+
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-3xl: var(--radius-3xl);
+  --radius-full: var(--radius-full);
+
+  --font-sans: var(--font-plus-jakarta);
+  --font-display: var(--font-plus-jakarta);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-md: var(--shadow-md);
+  --shadow-lift: var(--shadow-lift);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-glow: var(--shadow-glow);
+  --shadow-glow-sm: var(--shadow-glow-sm);
+  --shadow-glow-lg: var(--shadow-glow-lg);
+  --shadow-gold: var(--shadow-gold);
+  --shadow-gold-lg: var(--shadow-gold-lg);
+
+  --spacing-section: var(--space-section);
+  --spacing-section-sm: var(--space-section-sm);
+  --spacing-stack: var(--space-stack);
+  --spacing-stack-lg: var(--space-stack-lg);
+  --spacing-inline: var(--space-inline);
+  --spacing-gutter: var(--space-gutter);
+  --spacing-card: var(--space-card);
+  --spacing-card-lg: var(--space-card-lg);
+
+  --text-display: var(--text-display);
+  --text-hero: var(--text-hero);
+  --text-title: var(--text-title);
+  --text-heading: var(--text-heading);
+  --text-subtitle: var(--text-subtitle);
+  --text-body-lg: var(--text-body-lg);
+  --text-body: var(--text-body);
+  --text-body-sm: var(--text-body-sm);
+  --text-caption: var(--text-caption);
+  --text-micro: var(--text-micro);
+
+  --breakpoint-ipad: 768px;
+  --breakpoint-ipad-pro: 1024px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply min-h-dvh bg-background font-sans text-foreground;
+    background-image: var(--gradient-radial-glow), var(--gradient-hero);
+    background-attachment: fixed;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.35);
+    color: var(--magnus-white);
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  @media (min-width: 768px) and (max-width: 1366px) {
+    button,
+    a,
+    [role="button"] {
+      min-height: var(--touch-target);
+    }
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-[var(--max-content)] px-5 sm:px-8 md:px-[var(--ipad-gutter)] lg:px-10;
+  }
+
+  .container-wide {
+    @apply mx-auto w-full max-w-[var(--max-wide)] px-5 sm:px-8 md:px-[var(--ipad-gutter)] lg:px-10;
+  }
+
+  .container-narrow {
+    @apply mx-auto w-full max-w-[var(--max-narrow)] px-5 sm:px-8;
+  }
+
+  .container-form {
+    @apply mx-auto w-full max-w-[var(--max-form)] px-5 sm:px-6;
+  }
+
+  .safe-bottom {
+    padding-bottom: calc(var(--space-5) + var(--safe-bottom));
+  }
+
+  .safe-top {
+    padding-top: calc(var(--space-5) + var(--safe-top));
+  }
+
+  .focus-ring {
+    box-shadow: var(--shadow-focus);
+  }
+
+  .touch-target {
+    min-height: var(--touch-target);
+    min-width: var(--touch-target);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}

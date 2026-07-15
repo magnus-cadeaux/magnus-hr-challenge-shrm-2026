@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Magnus HR Challenge
 
-## Getting Started
+Premium exhibition experience for senior HR leaders — **SHRM Hyderabad 2026**.
 
-First, run the development server:
+## Product flow
+
+`/` → Register → Arena → Challenge → Analysis → Signature → Reward → Leaderboard
+
+Staff-only (hidden):
+
+- `/sales` — Sales Companion
+- `/admin` — Control Center
+
+## Stack
+
+- Next.js 15 (App Router) + TypeScript + Tailwind CSS v4
+- Framer Motion · TanStack Query · React Hook Form · Zod
+- Dexie (offline-first) · Supabase (shared multi-iPad backend)
+- Vercel-ready
+
+## Quick start
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+See [docs/SETUP.md](docs/SETUP.md) for Supabase migrations and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for Vercel.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` | Local Turbopack server |
+| `npm run build` | Production build |
+| `npm run start` | Serve production build |
+| `npm run typecheck` | TypeScript |
+| `npm run lint` | ESLint |
+| `npm run test` | Smoke tests (Vitest) |
+| `npm run prepare:check` | typecheck + lint + format |
 
-## Learn More
+## Production architecture (Sprint 11)
 
-To learn more about Next.js, take a look at the following resources:
+1. **Local-first writes** — sessionStorage + Dexie
+2. **Sync queue** — automatic retry, LWW conflict resolution
+3. **Supabase** — shared participants, inventory, leaderboard, sales, settings
+4. **Realtime** — multi-iPad live updates
+5. **Kiosk mode** — 90s idle → `/` + clear participant session
+6. **CSV exports** — participants, leads, inventory, challenge sessions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The app runs fully without Supabase (local demo mode). Connect env vars + migrations for production sync.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Security notes
 
-## Deploy on Vercel
+- Only `NEXT_PUBLIC_*` values are shipped to the browser.
+- `SUPABASE_SERVICE_ROLE_KEY` is server-only (`services/supabase/admin.ts`).
+- RLS policies prepare anonymous booth devices + future staff/admin JWT roles.
+- Middleware assigns request IDs (rate-limit hook points prepared).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proprietary — Magnus.

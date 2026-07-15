@@ -1,0 +1,163 @@
+/* Motion utilities for CSS-driven micro-interactions */
+
+@keyframes magnus-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes magnus-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes magnus-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes magnus-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes magnus-pulse-glow {
+  0%,
+  100% {
+    box-shadow: var(--shadow-glow-sm);
+  }
+  50% {
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+@keyframes magnus-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes magnus-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes magnus-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes magnus-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes magnus-skeleton {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-magnus-fade-in {
+  animation: magnus-fade-in var(--duration-slow) var(--ease-out-expo) both;
+}
+
+.animate-magnus-fade-up {
+  animation: magnus-fade-up var(--duration-slow) var(--ease-out-expo) both;
+}
+
+.animate-magnus-scale-in {
+  animation: magnus-scale-in var(--duration-slow) var(--ease-out-expo) both;
+}
+
+.animate-magnus-float {
+  animation: magnus-float 4s var(--ease-in-out-smooth) infinite;
+}
+
+.animate-magnus-pulse-glow {
+  animation: magnus-pulse-glow 3s var(--ease-in-out-smooth) infinite;
+}
+
+.animate-magnus-shimmer {
+  background-size: 200% 100%;
+  animation: magnus-shimmer 2.5s linear infinite;
+}
+
+.animate-magnus-spin {
+  animation: magnus-spin 0.8s linear infinite;
+}
+
+.animate-magnus-spin-slow {
+  animation: magnus-spin-slow 12s linear infinite;
+}
+
+.animate-magnus-breathe {
+  animation: magnus-breathe 2.8s var(--ease-in-out-smooth) infinite;
+}
+
+.animate-magnus-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(148, 163, 184, 0.06) 25%,
+    rgba(148, 163, 184, 0.14) 37%,
+    rgba(148, 163, 184, 0.06) 63%
+  );
+  background-size: 400% 100%;
+  animation: magnus-skeleton 1.6s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-magnus-fade-in,
+  .animate-magnus-fade-up,
+  .animate-magnus-scale-in,
+  .animate-magnus-float,
+  .animate-magnus-pulse-glow,
+  .animate-magnus-shimmer,
+  .animate-magnus-spin,
+  .animate-magnus-spin-slow,
+  .animate-magnus-breathe,
+  .animate-magnus-skeleton {
+    animation: none;
+  }
+}

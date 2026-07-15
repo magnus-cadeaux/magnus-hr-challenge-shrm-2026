@@ -1,0 +1,56 @@
+/* Magnus glass surface system */
+
+.glass-subtle {
+  background: var(--glass-bg-subtle);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(var(--glass-blur-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  box-shadow: var(--shadow-xs), var(--shadow-inner);
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-soft), var(--shadow-inner);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  box-shadow: var(--shadow-lift), var(--shadow-inner);
+}
+
+.glass-panel {
+  background: var(--glass-bg-panel);
+  border: 1px solid var(--glass-border-strong);
+  backdrop-filter: blur(var(--glass-blur-xl));
+  -webkit-backdrop-filter: blur(var(--glass-blur-xl));
+  box-shadow: var(--shadow-lg), var(--shadow-inner-strong);
+}
+
+.glass-interactive {
+  transition:
+    border-color var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-expo),
+    transform var(--duration-base) var(--ease-out-expo),
+    background var(--duration-base) var(--ease-out-expo);
+}
+
+.glass-interactive:hover {
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--shadow-lift), var(--shadow-glow-sm), var(--shadow-inner-strong);
+}
+
+.glass-border-gradient {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--glass-bg), var(--glass-bg)) padding-box,
+    var(--gradient-border) border-box;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
