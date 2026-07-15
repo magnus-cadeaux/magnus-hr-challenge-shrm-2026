@@ -62,7 +62,8 @@ export type QuickActionId =
   | "export_leads"
   | "export_inventory"
   | "reset_leaderboard"
-  | "reset_rewards";
+  | "reset_rewards"
+  | "clear_all_test_data";
 
 export type QuickActionDefinition = {
   id: QuickActionId;

@@ -80,6 +80,7 @@ export function RegistrationView() {
         {wizard.step.id === "email" ? (
           <EmailStep
             value={wizard.draft.email}
+            error={wizard.emailError}
             onChange={(value) => updateField("email", value)}
             onSubmit={goNext}
           />

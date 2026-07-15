@@ -17,8 +17,16 @@ export const registrationMobileSchema = z
   .trim()
   .regex(/^\d{10}$/, "Enter a valid 10-digit mobile number");
 
-/** Email is collected without blocking validation. */
-export const registrationEmailSchema = z.string().trim().max(160);
+/** Require a standard email shape: local@domain.tld */
+export const registrationEmailSchema = z
+  .string()
+  .trim()
+  .min(1, "Enter your email")
+  .max(160, "Email is too long")
+  .regex(
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    "Enter a valid email like name@company.com",
+  );
 
 export function digitsOnly(value: string, max = 10): string {
   return value.replace(/\D/g, "").slice(0, max);

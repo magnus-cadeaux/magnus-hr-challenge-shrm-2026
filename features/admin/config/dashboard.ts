@@ -1,9 +1,11 @@
 import { EVENT_NAME } from "@/lib/constants";
 import { isSupabaseConfigured } from "@/lib/env";
-import { MOCK_KPIS } from "./kpis";
-import { MOCK_CHARTS } from "./charts";
 import { readInventoryTier } from "./inventory-store";
-import { MOCK_RECENT_PARTICIPANTS } from "./operations";
+import {
+  readAdminCharts,
+  readAdminKpis,
+  readRecentParticipants,
+} from "./demo-store";
 import { MOCK_QUICK_ACTIONS } from "./actions";
 import { MOCK_SYSTEM_HEALTH } from "./system-health";
 import type { AdminDashboardSnapshot } from "./types";
@@ -16,10 +18,10 @@ export function buildAdminDashboardSnapshot(): AdminDashboardSnapshot {
   return {
     eventName: EVENT_NAME,
     appVersion: ADMIN_APP_VERSION,
-    kpis: MOCK_KPIS,
-    charts: MOCK_CHARTS,
+    kpis: readAdminKpis(),
+    charts: readAdminCharts(),
     inventory: readInventoryTier(),
-    recentParticipants: MOCK_RECENT_PARTICIPANTS,
+    recentParticipants: readRecentParticipants(),
     quickActions: MOCK_QUICK_ACTIONS,
     systemHealth: MOCK_SYSTEM_HEALTH.map((item) => {
       if (item.id === "app_version") {

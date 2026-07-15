@@ -10,6 +10,7 @@ import {
 import {
   digitsOnly,
   registrationCompanySchema,
+  registrationEmailSchema,
   registrationMobileSchema,
   registrationNameSchema,
 } from "../schema";
@@ -21,6 +22,7 @@ export function useRegistrationWizard() {
   const [mobileError, setMobileError] = useState<string | null>(null);
   const [nameError, setNameError] = useState<string | null>(null);
   const [companyError, setCompanyError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const step = REGISTRATION_STEPS[stepIndex];
   const isFirst = stepIndex === 0;
@@ -33,6 +35,7 @@ export function useRegistrationWizard() {
       if (key === "fullName") setNameError(null);
       if (key === "organization") setCompanyError(null);
       if (key === "phone") setMobileError(null);
+      if (key === "email") setEmailError(null);
     },
     [],
   );
@@ -78,8 +81,26 @@ export function useRegistrationWizard() {
       return true;
     }
 
+    if (id === "email") {
+      const result = registrationEmailSchema.safeParse(draft.email);
+      if (!result.success) {
+        setEmailError(
+          result.error.issues[0]?.message ?? "Enter a valid email",
+        );
+        return false;
+      }
+      setEmailError(null);
+      return true;
+    }
+
     return true;
-  }, [draft.fullName, draft.organization, draft.phone, stepIndex]);
+  }, [
+    draft.email,
+    draft.fullName,
+    draft.organization,
+    draft.phone,
+    stepIndex,
+  ]);
 
   const goNext = useCallback(() => {
     if (isLast) return false;
@@ -96,6 +117,7 @@ export function useRegistrationWizard() {
     setNameError(null);
     setCompanyError(null);
     setMobileError(null);
+    setEmailError(null);
     return true;
   }, [isFirst]);
 
@@ -120,6 +142,7 @@ export function useRegistrationWizard() {
     nameError,
     companyError,
     mobileError,
+    emailError,
     updateField,
     setPhoneDigits,
     goNext,

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { exportCsv } from "@/lib/exports";
 import { clearParticipantSession } from "@/lib/kiosk";
 import {
+  clearAllTestData,
   resetLeaderboardToday,
   resetRewardCounters,
   startNewLeaderboardDay,
@@ -86,6 +87,24 @@ export function QuickActionsRow({
           const day = startNewLeaderboardDay();
           onDataChange?.();
           setFlash(`New event day started: ${day}`);
+          break;
+        }
+        case "clear_all_test_data": {
+          const typed = window.prompt(
+            'Type CLEAR to wipe all test participant data (participants, sessions, answers, signatures, rewards, leaderboard). Inventory stock is kept.',
+          );
+          if (typed == null) return;
+          if (typed.trim() !== "CLEAR") {
+            setFlash('Cancelled — type CLEAR exactly to confirm.');
+            break;
+          }
+          const { cleared } = await clearAllTestData();
+          onDataChange?.();
+          setFlash(
+            cleared > 0
+              ? `Test data cleared (${cleared} local records).`
+              : "Test data cleared.",
+          );
           break;
         }
         default:

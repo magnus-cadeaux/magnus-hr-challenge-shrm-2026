@@ -43,4 +43,10 @@ export const MOCK_QUICK_ACTIONS: QuickActionDefinition[] = [
     description: "Zero reserved & distributed counters",
     tone: "caution",
   },
+  {
+    id: "clear_all_test_data",
+    label: "Clear All Test Data",
+    description: "Wipe participants, sessions, leaderboard, rewards",
+    tone: "caution",
+  },
 ];

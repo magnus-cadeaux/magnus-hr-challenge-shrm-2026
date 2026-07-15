@@ -7,11 +7,17 @@ import { cn } from "@/lib/utils";
 
 interface EmailStepProps {
   value: string;
+  error?: string | null;
   onChange: (value: string) => void;
   onSubmit: () => void;
 }
 
-export function EmailStep({ value, onChange, onSubmit }: EmailStepProps) {
+export function EmailStep({
+  value,
+  error,
+  onChange,
+  onSubmit,
+}: EmailStepProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -29,8 +35,10 @@ export function EmailStep({ value, onChange, onSubmit }: EmailStepProps) {
         placeholder="name@company.com"
         autoComplete="email"
         inputMode="email"
+        aria-invalid={Boolean(error)}
         className={cn(
           "h-14 text-base shadow-glow-sm transition-[box-shadow,border-color] focus-visible:shadow-glow",
+          error && "border-destructive/50",
         )}
         onChange={(event) => onChange(event.target.value)}
         onKeyDown={(event) => {
@@ -40,9 +48,15 @@ export function EmailStep({ value, onChange, onSubmit }: EmailStepProps) {
           }
         }}
       />
-      <Text variant="caption" className="mt-2">
-        Prefer your work email — we won&apos;t block you if it looks unfinished.
-      </Text>
+      {error ? (
+        <Text variant="caption" className="mt-2 text-destructive" role="alert">
+          {error}
+        </Text>
+      ) : (
+        <Text variant="caption" className="mt-2">
+          Use a work email so we can follow up after the booth.
+        </Text>
+      )}
     </div>
   );
 }
