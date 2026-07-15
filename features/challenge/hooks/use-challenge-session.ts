@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constants";
 import {
@@ -9,7 +9,6 @@ import {
   collectAnswer,
   createChallengeSession,
   getCurrentQuestion,
-  INSIGHT_DISPLAY_MS,
   type ChallengeSessionState,
 } from "../engine";
 import { persistChallengeSession } from "../engine/session-storage";
@@ -17,7 +16,6 @@ import { persistChallengeSession } from "../engine/session-storage";
 export function useChallengeSession() {
   const router = useRouter();
   const [session, setSession] = useState<ChallengeSessionState | null>(null);
-  const insightTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setSession(createChallengeSession());
@@ -27,14 +25,6 @@ export function useChallengeSession() {
     if (!session) return;
     persistChallengeSession(session);
   }, [session]);
-
-  useEffect(() => {
-    return () => {
-      if (insightTimerRef.current != null) {
-        window.clearTimeout(insightTimerRef.current);
-      }
-    };
-  }, []);
 
   const currentQuestion = useMemo(
     () => (session ? getCurrentQuestion(session) : null),
@@ -52,32 +42,23 @@ export function useChallengeSession() {
     });
   }, []);
 
-  useEffect(() => {
-    if (!session || session.phase !== "insight") return;
-
-    insightTimerRef.current = window.setTimeout(() => {
-      setSession((current) => {
-        if (!current || current.phase !== "insight") return current;
-        const next = advanceAfterInsight(current);
-        if (next.phase === "complete") {
-          persistChallengeSession(next);
-          router.push(ROUTES.analysis);
-        }
-        return next;
-      });
-    }, INSIGHT_DISPLAY_MS);
-
-    return () => {
-      if (insightTimerRef.current != null) {
-        window.clearTimeout(insightTimerRef.current);
+  const continueAfterInsight = useCallback(() => {
+    setSession((current) => {
+      if (!current || current.phase !== "insight") return current;
+      const next = advanceAfterInsight(current);
+      if (next.phase === "complete") {
+        persistChallengeSession(next);
+        router.push(ROUTES.analysis);
       }
-    };
-  }, [session, router]);
+      return next;
+    });
+  }, [router]);
 
   return {
     session,
     currentQuestion,
     submitAnswer,
+    continueAfterInsight,
     isReady: Boolean(session),
   } as const;
 }

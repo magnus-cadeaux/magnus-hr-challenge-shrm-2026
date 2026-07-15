@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Stack } from "@/components/layout";
 import { Eyebrow, Text } from "@/components/typography";
@@ -8,11 +9,13 @@ import { durations, easings } from "@/lib/design-system/motion";
 
 interface InsightScreenProps {
   insight: string;
+  onContinue: () => void;
   reduceMotion?: boolean;
 }
 
 export function InsightScreen({
   insight,
+  onContinue,
   reduceMotion = false,
 }: InsightScreenProps) {
   return (
@@ -44,6 +47,14 @@ export function InsightScreen({
           <Text variant="lead" className="max-w-xl text-pretty">
             {insight}
           </Text>
+          <Button
+            size="lg"
+            className="mt-2 min-h-14 w-full sm:w-auto sm:min-w-[12rem]"
+            motionDisabled={reduceMotion}
+            onClick={onContinue}
+          >
+            Continue
+          </Button>
         </Stack>
       </GlassCard>
     </m.div>

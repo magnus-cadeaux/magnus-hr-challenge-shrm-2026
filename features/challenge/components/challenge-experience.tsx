@@ -12,7 +12,7 @@ import { InsightScreen } from "./insight-screen";
 
 export function ChallengeExperience() {
   const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  const { session, currentQuestion, submitAnswer, isReady } =
+  const { session, currentQuestion, submitAnswer, continueAfterInsight, isReady } =
     useChallengeSession();
   const { label: elapsedLabel } = useElapsedTime(
     session?.startedAt,
@@ -50,6 +50,7 @@ export function ChallengeExperience() {
           <InsightScreen
             key={`insight-${session.currentIndex}`}
             insight={session.lastInsight}
+            onContinue={continueAfterInsight}
             reduceMotion={reduceMotion}
           />
         ) : null}
