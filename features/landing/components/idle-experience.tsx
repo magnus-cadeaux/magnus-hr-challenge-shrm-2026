@@ -3,10 +3,10 @@
 import { m } from "framer-motion";
 import { Stack } from "@/components/layout";
 import { Text } from "@/components/typography";
-import { APP_NAME, EVENT_NAME } from "@/lib/constants";
+import { BrandMark } from "@/components/ui/brand-mark";
+import { EVENT_NAME } from "@/lib/constants";
 import { durations, easings } from "@/lib/design-system/motion";
 import { cn } from "@/lib/utils";
-import { MagnusMark } from "./magnus-mark";
 import { RotatingInsightCards } from "./rotating-insight-cards";
 import { useRotatingInsightIndex } from "../hooks/use-rotating-insight";
 import type { IdleInsightCard } from "../mock-idle-stats";
@@ -49,25 +49,33 @@ export function IdleExperience({
     >
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-10 md:px-10">
         <Stack gap="xl" align="center" className="w-full max-w-3xl text-center">
-          <MagnusMark
-            expanded={frozen}
-            breathing={!frozen}
-            reduceMotion={reduceMotion}
-          />
+          <m.div
+            animate={
+              reduceMotion
+                ? { scale: frozen ? 1.08 : 1 }
+                : frozen
+                  ? { scale: 1.12 }
+                  : { scale: [1, 1.03, 1] }
+            }
+            transition={
+              frozen
+                ? { duration: durations.reveal, ease: easings.outExpo }
+                : reduceMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: 4.8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+            }
+            style={{ willChange: "transform" }}
+          >
+            <BrandMark size="hero" priority className="mx-auto object-center" />
+          </m.div>
 
-          <Stack gap="sm" align="center" className="w-full">
-            <Text
-              variant="title"
-              gradient="blue"
-              align="center"
-              className="tracking-tight"
-            >
-              {APP_NAME}
-            </Text>
-            <Text variant="eyebrow" align="center">
-              {EVENT_NAME}
-            </Text>
-          </Stack>
+          <Text variant="eyebrow" align="center">
+            {EVENT_NAME}
+          </Text>
 
           <Text
             variant="subtitle"

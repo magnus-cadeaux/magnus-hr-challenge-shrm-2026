@@ -5,6 +5,7 @@ import { AnimatePresence, m } from "framer-motion";
 import { GradientBackground } from "@/components/ui/gradient-background";
 import { FloatingParticles } from "@/components/ui/floating-particles";
 import { PageContainer } from "@/components/ui/page-container";
+import { BrandMark } from "@/components/ui/brand-mark";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import { Stack } from "@/components/layout";
 import { Text } from "@/components/typography";
@@ -43,6 +44,7 @@ export function ArenaExperience() {
       <PageContainer className="relative z-10 py-8 md:py-12">
         <Stack gap="xl" className="pb-10">
           <Stack gap="sm" align="center" className="text-center">
+            <BrandMark size="md" className="mx-auto object-center" />
             <Text variant="display" gradient="blue" className="tracking-tight">
               Today&apos;s HR Arena
             </Text>

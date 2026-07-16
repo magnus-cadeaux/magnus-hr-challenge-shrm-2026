@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { APP_NAME, EVENT_NAME, ROUTES } from "@/lib/constants";
+import { BrandMark } from "@/components/ui/brand-mark";
 import { cn } from "@/lib/utils";
 
 interface AppHeaderProps {
@@ -21,10 +24,12 @@ export function AppHeader({ className, compact = false }: AppHeaderProps) {
           compact ? "h-14" : "h-16 md:h-18",
         )}
       >
-        <Link href={ROUTES.home} className="group flex min-w-0 flex-col">
-          <span className="truncate text-sm font-bold tracking-tight text-foreground transition-colors group-hover:text-blue-300 md:text-base">
-            {APP_NAME}
-          </span>
+        <Link
+          href={ROUTES.home}
+          className="group flex min-w-0 items-center gap-3"
+          aria-label={APP_NAME}
+        >
+          <BrandMark size="sm" decorative />
           <span className="truncate text-[11px] font-medium tracking-[0.12em] text-muted-foreground uppercase">
             {EVENT_NAME}
           </span>

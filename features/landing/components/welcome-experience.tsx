@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { m } from "framer-motion";
 import { Gift, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BrandMark } from "@/components/ui/brand-mark";
 import { Flex, Stack, Cluster } from "@/components/layout";
 import { Text } from "@/components/typography";
 import { ROUTES } from "@/lib/constants";
@@ -35,6 +36,10 @@ export function WelcomeExperience({ reduceMotion = false }: WelcomeExperiencePro
         className="w-full max-w-2xl"
       >
         <Stack gap="xl" align="start">
+          <m.div {...(reduceMotion ? {} : { variants: heroReveal.item })}>
+            <BrandMark size="lg" priority />
+          </m.div>
+
           <Stack gap="md" align="start" className="w-full">
             <m.div {...(reduceMotion ? {} : { variants: heroReveal.item })}>
               <Text variant="display" gradient="blue" className="tracking-tight">

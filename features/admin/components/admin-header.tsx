@@ -1,5 +1,6 @@
 "use client";
 
+import { BrandMark } from "@/components/ui/brand-mark";
 import { Text } from "@/components/typography";
 import { useLiveClock } from "../hooks/use-live-clock";
 
@@ -16,9 +17,12 @@ export function AdminHeader({ eventName }: AdminHeaderProps) {
         <Text variant="eyebrow" className="mb-2 text-blue-200/70">
           Operations
         </Text>
-        <Text variant="display" gradient="blue" className="tracking-tight">
-          Magnus HR Challenge Control Center
-        </Text>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <BrandMark size="sm" />
+          <Text variant="display" gradient="blue" className="tracking-tight">
+            Control Center
+          </Text>
+        </div>
         <Text variant="subtitle" className="mt-2 text-lg">
           Event · {eventName}
         </Text>

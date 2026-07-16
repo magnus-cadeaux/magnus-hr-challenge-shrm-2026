@@ -1,4 +1,5 @@
 export { Button, buttonVariants, type ButtonProps } from "./button";
+export { BrandMark, type BrandMarkSize } from "./brand-mark";
 export { IconButton, type IconButtonProps } from "./icon-button";
 export { GlassCard, type GlassCardProps } from "./glass-card";
 export { HeroTitle } from "./hero-title";
