@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" fill="none">
+  <rect width="640" height="400" rx="32" fill="#0d1830"/>
+  <rect x="1.5" y="1.5" width="637" height="397" rx="30.5" stroke="rgba(148,163,184,0.2)"/>
+  <!-- gift box -->
+  <rect x="228" y="188" width="184" height="132" rx="10" fill="url(#box)"/>
+  <rect x="228" y="188" width="184" height="34" rx="8" fill="url(#lid)"/>
+  <!-- ribbon vertical -->
+  <rect x="308" y="188" width="24" height="132" fill="rgba(13,24,48,0.55)"/>
+  <!-- ribbon bow -->
+  <path d="M320 188c-18-28-58-30-58 0 0 14 22 14 58 0z" fill="url(#bow)"/>
+  <path d="M320 188c18-28 58-30 58 0 0 14-22 14-58 0z" fill="url(#bow2)"/>
+  <circle cx="320" cy="186" r="10" fill="#9fd8ff"/>
+  <defs>
+    <linearGradient id="box" x1="228" y1="188" x2="412" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <linearGradient id="lid" x1="228" y1="188" x2="412" y2="222" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="bow" x1="262" y1="160" x2="320" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93C5FD"/>
+      <stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="bow2" x1="320" y1="160" x2="378" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#93C5FD"/>
+    </linearGradient>
+  </defs>
+</svg>

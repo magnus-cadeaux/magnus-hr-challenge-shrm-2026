@@ -18,7 +18,10 @@ function readManagedBank(): ChallengeQuestionConfig[] {
     const managed = peekManagedQuestionBank();
     if (!managed.length) return [];
     return managed
-      .filter((question) => question.active)
+      // image_choice has no real assets for tonight — never enter the session pool
+      .filter(
+        (question) => question.active && question.type !== "image_choice",
+      )
       .sort((a, b) => a.sortOrder - b.sortOrder)
       .map(toChallengeConfig);
   } catch {
@@ -28,12 +31,24 @@ function readManagedBank(): ChallengeQuestionConfig[] {
 
 /**
  * Prefer locally managed active questions when present; otherwise ship config bank.
+ * image_choice is always excluded (broken/missing visuals).
  */
 export function loadQuestionBank(): ChallengeQuestionConfig[] {
   const managed = readManagedBank();
-  return managed.length > 0 ? managed : QUESTION_BANK;
+  const bank = managed.length > 0 ? managed : QUESTION_BANK;
+  return bank.filter((question) => question.type !== "image_choice");
 }
 
+function prepareOptions(
+  question: ChallengeQuestionConfig,
+  random: () => number,
+) {
+  // Scale options are ordered meaning (1→5) — never shuffle.
+  if (question.type === "opinion_scale") {
+    return question.options;
+  }
+  return shuffleArray(question.options, random);
+}
 
 export function prepareSessionQuestions(
   bank: ChallengeQuestionConfig[] = loadQuestionBank(),
@@ -44,7 +59,7 @@ export function prepareSessionQuestions(
 
   return selected.map((question, index) => ({
     ...question,
-    options: shuffleArray(question.options, random),
+    options: prepareOptions(question, random),
     sessionOrder: index + 1,
   }));
 }

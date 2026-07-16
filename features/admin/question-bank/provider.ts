@@ -91,9 +91,22 @@ async function writeStoreAsync(questions: ManagedQuestion[]): Promise<void> {
  */
 export const localQuestionBankProvider: QuestionBankProvider = {
   async list() {
-    return [...(await readStoreAsync())].sort(
-      (a, b) => a.sortOrder - b.sortOrder,
-    );
+    const stored = await readStoreAsync();
+    let changed = false;
+    const next = stored.map((question) => {
+      // No image assets shipping tonight — keep image_choice out of active pool.
+      if (question.type === "image_choice" && question.active) {
+        changed = true;
+        return {
+          ...question,
+          active: false,
+          updatedAt: new Date().toISOString(),
+        };
+      }
+      return question;
+    });
+    if (changed) await writeStoreAsync(next);
+    return [...next].sort((a, b) => a.sortOrder - b.sortOrder);
   },
 
   async get(id) {
