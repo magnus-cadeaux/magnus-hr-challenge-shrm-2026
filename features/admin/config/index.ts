@@ -8,4 +8,6 @@ export { MOCK_SYSTEM_HEALTH } from "./system-health";
 export {
   ADMIN_APP_VERSION,
   buildAdminDashboardSnapshot,
+  loadAdminDashboardSnapshot,
 } from "./dashboard";
+export { loadLiveAdminMetrics } from "./live-metrics";

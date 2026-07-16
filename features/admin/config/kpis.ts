@@ -1,52 +1,40 @@
 import type { KpiDefinition } from "./types";
 
-/** Exhibition-floor mock KPIs for “How is today going?” */
+/** Empty KPI shell — live values come from `loadLiveAdminMetrics`. */
 export const MOCK_KPIS: KpiDefinition[] = [
-  {
-    id: "participants_today",
-    label: "Participants Today",
-    value: 186,
-  },
-  {
-    id: "completed_challenges",
-    label: "Completed Challenges",
-    value: 154,
-  },
+  { id: "participants_today", label: "Participants Today", value: 0 },
+  { id: "completed_challenges", label: "Completed Challenges", value: 0 },
   {
     id: "completion_rate",
     label: "Completion Rate",
-    value: 82.8,
+    value: 0,
     suffix: "%",
     decimals: 1,
   },
   {
     id: "average_duration",
     label: "Average Duration",
-    value: 4.2,
+    value: 0,
     suffix: " min",
     decimals: 1,
   },
   {
     id: "average_lead_score",
     label: "Average Lead Score",
-    value: 74,
+    value: 0,
     achievement: true,
   },
-  {
-    id: "companies_represented",
-    label: "Companies Represented",
-    value: 47,
-  },
+  { id: "companies_represented", label: "Companies Represented", value: 0 },
   {
     id: "rewards_distributed",
     label: "Rewards Distributed",
-    value: 141,
+    value: 0,
     achievement: true,
   },
   {
     id: "premium_upgrades",
     label: "Premium Upgrades",
-    value: 4,
+    value: 0,
     achievement: true,
   },
 ];

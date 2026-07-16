@@ -9,7 +9,6 @@ import {
 import { resetInventoryProvider } from "@/features/reward/engine/inventory-provider";
 import { MOCK_INVENTORY } from "@/features/reward/config/inventory";
 import { resetLocalInventoryTier } from "../config/inventory-store";
-import { markAdminDemoCleared } from "../config/demo-store";
 import { clearParticipantSession } from "@/lib/kiosk";
 import type { SyncEntity } from "@/services/storage/dexie";
 
@@ -19,6 +18,7 @@ const TEST_DATA_ENTITIES: SyncEntity[] = [
   "leaderboard",
   "rewards",
   "signature_profiles",
+  "sales_profiles",
   "challenge_sessions",
   "participants",
 ];
@@ -29,6 +29,7 @@ const SUPABASE_CLEAR_ORDER = [
   "leaderboard",
   "rewards",
   "signature_profiles",
+  "sales_profiles",
   "challenge_sessions",
   "participants",
 ] as const;
@@ -53,7 +54,15 @@ export async function clearAllTestData(): Promise<{ cleared: number }> {
   await Promise.all(queued.map((item) => db.syncQueue.delete(item.id)));
 
   clearParticipantSession();
-  markAdminDemoCleared();
+
+  // Remove legacy demo-flag if an older build left it behind.
+  if (isBrowser()) {
+    try {
+      window.localStorage.removeItem("magnus.admin.demo.cleared");
+    } catch {
+      /* ignore */
+    }
+  }
 
   if (isSupabaseConfigured()) {
     const client = getSupabaseBrowserClient();

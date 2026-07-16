@@ -18,11 +18,17 @@ export function OperationsRow({ participants }: OperationsRowProps) {
         </Text>
         <Text variant="caption">Recent participants · last 10</Text>
       </div>
-      <div className="grid gap-3 lg:grid-cols-2">
-        {participants.map((participant) => (
-          <ParticipantOpCard key={participant.id} participant={participant} />
-        ))}
-      </div>
+      {participants.length === 0 ? (
+        <Text variant="caption" className="text-muted-foreground">
+          No participants yet today.
+        </Text>
+      ) : (
+        <div className="grid gap-3 lg:grid-cols-2">
+          {participants.map((participant) => (
+            <ParticipantOpCard key={participant.id} participant={participant} />
+          ))}
+        </div>
+      )}
     </Stack>
   );
 }

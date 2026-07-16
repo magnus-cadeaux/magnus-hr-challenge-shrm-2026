@@ -1,15 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { GradientBackground } from "@/components/ui/gradient-background";
 import { PageContainer } from "@/components/ui/page-container";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
+import { LoadingScreen } from "@/components/ui/loading-screen";
 import { Stack } from "@/components/layout";
 import { Text } from "@/components/typography";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
-import { buildAdminDashboardSnapshot } from "../config";
-import type { SystemHealthItem } from "../config/types";
+import {
+  buildAdminDashboardSnapshot,
+  loadAdminDashboardSnapshot,
+} from "../config";
+import type {
+  AdminDashboardSnapshot,
+  SystemHealthItem,
+} from "../config/types";
 import { AdminHeader } from "./admin-header";
 import { KpiRow } from "./kpi-row";
 import { ChartsRow } from "./charts-row";
@@ -37,15 +44,34 @@ function withLiveInternet(items: SystemHealthItem[]): SystemHealthItem[] {
 
 export function CommandCenter() {
   const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  const [base, setBase] = useState(() => buildAdminDashboardSnapshot());
-  const [systemHealth, setSystemHealth] = useState(base.systemHealth);
+  const [base, setBase] = useState<AdminDashboardSnapshot>(() =>
+    buildAdminDashboardSnapshot(),
+  );
+  const [systemHealth, setSystemHealth] = useState(() =>
+    withLiveInternet(base.systemHealth),
+  );
   const [tab, setTab] = useState<AdminTab>("operations");
+  const [loading, setLoading] = useState(true);
 
-  const refreshDashboard = () => {
-    const next = buildAdminDashboardSnapshot();
+  const refreshDashboard = useCallback(async () => {
+    const next = await loadAdminDashboardSnapshot();
     setBase(next);
     setSystemHealth(withLiveInternet(next.systemHealth));
-  };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        await refreshDashboard();
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [refreshDashboard]);
 
   useEffect(() => {
     setSystemHealth(withLiveInternet(base.systemHealth));
@@ -60,6 +86,10 @@ export function CommandCenter() {
       window.removeEventListener("offline", sync);
     };
   }, [base.systemHealth]);
+
+  if (loading) {
+    return <LoadingScreen label="Loading live dashboard" />;
+  }
 
   return (
     <div className="relative min-h-dvh overflow-x-hidden">
@@ -114,7 +144,9 @@ export function CommandCenter() {
               <OperationsRow participants={base.recentParticipants} />
               <QuickActionsRow
                 actions={base.quickActions}
-                onDataChange={refreshDashboard}
+                onDataChange={() => {
+                  void refreshDashboard();
+                }}
               />
               <SystemHealthRow items={systemHealth} />
             </Stack>
