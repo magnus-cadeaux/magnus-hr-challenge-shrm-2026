@@ -8,7 +8,7 @@ import {
   type RegistrationStepId,
 } from "../constants";
 import {
-  digitsOnly,
+  normalizeIndianMobile,
   registrationCompanySchema,
   registrationEmailSchema,
   registrationMobileSchema,
@@ -41,7 +41,7 @@ export function useRegistrationWizard() {
   );
 
   const setPhoneDigits = useCallback((value: string) => {
-    updateField("phone", digitsOnly(value));
+    updateField("phone", normalizeIndianMobile(value));
   }, [updateField]);
 
   const validateCurrent = useCallback((): boolean => {

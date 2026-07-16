@@ -46,9 +46,8 @@ export function MobileStep({
           id="registration-mobile"
           value={formatIndianMobileDisplay(value)}
           placeholder="98765 43210"
-          inputMode="numeric"
+          inputMode="tel"
           autoComplete="tel-national"
-          maxLength={11}
           aria-invalid={Boolean(error)}
           aria-describedby="registration-mobile-hint"
           className={cn(

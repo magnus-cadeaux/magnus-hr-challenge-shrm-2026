@@ -13,8 +13,12 @@ import type { RegistrationDraft } from "../../constants";
 interface ReviewStepProps {
   draft: RegistrationDraft;
   reduceMotion?: boolean;
+  checkingDuplicate?: boolean;
+  showDuplicateWarning?: boolean;
   onEdit: (field: "name" | "company" | "mobile" | "email") => void;
   onContinue: () => void;
+  onConfirmReplay?: () => void;
+  onDismissDuplicate?: () => void;
 }
 
 function ReviewRow({
@@ -46,8 +50,12 @@ function ReviewRow({
 export function ReviewStep({
   draft,
   reduceMotion = false,
+  checkingDuplicate = false,
+  showDuplicateWarning = false,
   onEdit,
   onContinue,
+  onConfirmReplay,
+  onDismissDuplicate,
 }: ReviewStepProps) {
   const mobileDisplay = draft.phone
     ? `+91 ${draft.phone.slice(0, 5)} ${draft.phone.slice(5)}`
@@ -114,14 +122,47 @@ export function ReviewStep({
           </Flex>
         </Flex>
 
-        <Button
-          size="xl"
-          className="w-full"
-          onClick={onContinue}
-          motionDisabled={reduceMotion}
-        >
-          Enter the Arena
-        </Button>
+        {showDuplicateWarning ? (
+          <Stack
+            gap="md"
+            className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5"
+            role="status"
+          >
+            <Text variant="heading" className="text-base text-amber-50">
+              Looks like you&apos;ve already played today — want to try again
+              for fun, or is this a mistake?
+            </Text>
+            <Flex gap="sm" wrap className="w-full">
+              <Button
+                size="lg"
+                className="min-w-[10rem] flex-1"
+                onClick={onConfirmReplay}
+                motionDisabled={reduceMotion}
+              >
+                Play again
+              </Button>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="min-w-[10rem] flex-1"
+                onClick={onDismissDuplicate}
+                motionDisabled={reduceMotion}
+              >
+                Go back
+              </Button>
+            </Flex>
+          </Stack>
+        ) : (
+          <Button
+            size="xl"
+            className="w-full"
+            onClick={onContinue}
+            disabled={checkingDuplicate}
+            motionDisabled={reduceMotion}
+          >
+            {checkingDuplicate ? "Checking…" : "Enter the Arena"}
+          </Button>
+        )}
       </Stack>
     </m.div>
   );

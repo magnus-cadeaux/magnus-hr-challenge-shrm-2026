@@ -1,8 +1,21 @@
 import { STORAGE_KEYS } from "@/lib/constants";
 import { isBrowser } from "@/utils/device";
+import { recordCompletedPlay } from "@/features/registration/lib/play-log";
 import type { ChallengeSessionState } from "../engine/types";
 import { computeChallengeScore } from "./scoring";
 import { queueLocalWrite } from "@/services/sync/bridge";
+
+function readDraftIdentity(): { phone?: string; email?: string } {
+  if (!isBrowser()) return {};
+  try {
+    const raw = window.sessionStorage.getItem(STORAGE_KEYS.participantDraft);
+    if (!raw) return {};
+    const draft = JSON.parse(raw) as { phone?: string; email?: string };
+    return { phone: draft.phone, email: draft.email };
+  } catch {
+    return {};
+  }
+}
 
 function elapsedMsFor(session: ChallengeSessionState): number | null {
   if (!session.completedAt) return null;
@@ -38,6 +51,14 @@ export function persistChallengeSession(session: ChallengeSessionState): void {
     completed_at: nextSession.completedAt,
     elapsed_ms: elapsedMs,
   });
+
+  if (nextSession.status === "completed") {
+    const draft = readDraftIdentity();
+    recordCompletedPlay({
+      phone: draft.phone,
+      email: draft.email,
+    });
+  }
 }
 
 export function readChallengeSession(): ChallengeSessionState | null {

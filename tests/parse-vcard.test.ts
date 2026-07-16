@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseVCard } from "@/features/registration/lib/parse-vcard";
+import { parseVCard } from "@/features/badge-scan";
 
 const SAMPLE = `BEGIN:VCARD
 VERSION:3.0

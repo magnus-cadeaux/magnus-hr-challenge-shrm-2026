@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { BrandMark } from "@/components/ui/brand-mark";
 import { Text } from "@/components/typography";
+import { ROUTES } from "@/lib/constants";
 import { useLiveClock } from "../hooks/use-live-clock";
 
 interface AdminHeaderProps {
@@ -26,6 +28,12 @@ export function AdminHeader({ eventName }: AdminHeaderProps) {
         <Text variant="subtitle" className="mt-2 text-lg">
           Event · {eventName}
         </Text>
+        <Link
+          href={ROUTES.adminScan}
+          className="mt-4 inline-flex text-sm font-semibold text-blue-300 transition-colors hover:text-white"
+        >
+          Quick Contact Scan →
+        </Link>
       </div>
       <div className="flex flex-wrap gap-8 lg:text-right">
         <div>

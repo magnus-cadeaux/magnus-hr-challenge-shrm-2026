@@ -15,6 +15,7 @@ export const ROUTES = {
   thankYou: "/thank-you",
   sales: "/sales",
   admin: "/admin",
+  adminScan: "/admin/scan",
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];
@@ -38,6 +39,8 @@ export const STORAGE_KEYS = {
   salesNotes: "magnus.sales.notes",
   salesConversationComplete: "magnus.sales.conversation-complete",
   questionBank: "magnus.admin.question-bank",
+  /** Soft duplicate-play log keyed by event day (phone/email). */
+  playLog: "magnus.registration.play-log",
 } as const;
 
 export const BREAKPOINTS = {

@@ -46,6 +46,7 @@ export type Database = {
           company_id: string | null;
           company_name: string | null;
           device_id: string | null;
+          source: string;
           started_at: string;
           completed_at: string | null;
           created_at: string;
@@ -60,6 +61,7 @@ export type Database = {
           company_id?: string | null;
           company_name?: string | null;
           device_id?: string | null;
+          source?: string;
           started_at?: string;
           completed_at?: string | null;
           created_at?: string;
